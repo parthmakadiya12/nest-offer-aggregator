@@ -1,13 +1,23 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { OfferController } from './offer/offer.controller';
-import { OfferService } from './offer/offer.service';
-import { ClientFactory } from './clients/client.factory';
+import { OfferModule } from './offer/offer.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Offer } from './entities/offer.entity';
 
 @Module({
-  imports: [],
-  controllers: [AppController, OfferController],
-  providers: [AppService, OfferService, ClientFactory],
+  imports: [
+    OfferModule,
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'user',
+      password: 'password',
+      database: 'db',
+      entities: [Offer],
+      synchronize: true,
+    }),
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

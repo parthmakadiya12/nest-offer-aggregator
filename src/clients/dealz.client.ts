@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { OfferDto } from 'src/dtos/offer.dto';
 import { offer1Payload } from 'src/mock/offer1.payload';
+import { IClient } from './Iclient.interface';
+import { validate, validateOrReject } from 'class-validator';
+import { plainToClass } from 'class-transformer';
 
 @Injectable()
-export class DealzClient {
+export class DealzClient implements IClient {
   // can create response Type for this but considering time using any
   async fetchOffers(): Promise<any> {
     return new Promise((res) => {
@@ -15,7 +18,7 @@ export class DealzClient {
     return 'dealz';
   }
 
-  transform(payload: any): OfferDto[] {
+  async transform(payload: any): Promise<OfferDto[]> {
     const { response } = payload;
     const transformedOffers: OfferDto[] = [];
 
@@ -31,8 +34,11 @@ export class DealzClient {
           isAndroid: offer.device !== 'iphone_ipad',
           isIos: offer.device === 'iphone_ipad',
           offerUrlTemplate: offer.offer_url,
+          providerName: this.getClientName(),
+          slug: offer.slug ?? '',
         };
-
+        const newTransformedOffer = plainToClass(OfferDto, transformedOffer);
+        await validateOrReject(newTransformedOffer);
         transformedOffers.push(transformedOffer);
       } catch (error) {
         console.error(`Error processing offer: ${error.message}`);

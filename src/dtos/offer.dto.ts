@@ -1,8 +1,4 @@
-import {
-  IsString,
-  IsBoolean,
-  IsUrl,
-} from 'class-validator';
+import { IsBoolean, IsEnum, IsString, IsUrl } from 'class-validator';
 
 export class OfferDto {
   @IsString()
@@ -31,4 +27,10 @@ export class OfferDto {
 
   @IsUrl()
   offerUrlTemplate: string;
+
+  @IsString()
+  providerName: string;
+
+  @IsString()
+  slug: string;
 }
