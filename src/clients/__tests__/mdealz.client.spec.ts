@@ -28,6 +28,8 @@ describe('mdealz client test', () => {
         requirements:
           'Register with VALID personal information, Make a minimum deposit of $50,Redeem your points! *New Users Only!',
         thumbnail: 'https://some.url',
+        providerName: 'mdealz',
+        slug: '',
       },
     ]);
   });

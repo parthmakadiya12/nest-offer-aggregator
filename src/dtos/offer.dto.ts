@@ -1,7 +1,6 @@
-import { IsBoolean, IsEnum, IsString, IsUrl } from 'class-validator';
+import { IsBoolean, IsNumberString, IsString, IsUrl } from 'class-validator';
 
 export class OfferDto {
-  @IsString()
   externalOfferId: string;
 
   @IsString()

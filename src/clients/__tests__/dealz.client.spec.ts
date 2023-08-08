@@ -14,7 +14,16 @@ describe('dealz client test', () => {
   });
   it('should transform offer properly', async () => {
     const dealzClient = new DealzClient();
-    const result = await dealzClient.transform(offer1Payload);
+    const newPayload = {
+      ...offer1Payload,
+      response: {
+        ...offer1Payload.response,
+        offers: [
+          { ...offer1Payload.response.offers[0], offer_id: '19524555' },
+        ],
+      },
+    };
+    const result = await dealzClient.transform(newPayload);
     expect(result).toEqual([
       {
         description: 'Play and reach level 23 within 14 days.',
@@ -26,6 +35,8 @@ describe('dealz client test', () => {
         offerUrlTemplate: 'https://some.url',
         requirements: 'Play and reach level 23 within 14 days.',
         thumbnail: 'https://some.url',
+        providerName: 'dealz',
+        slug: '',
       },
     ]);
   });

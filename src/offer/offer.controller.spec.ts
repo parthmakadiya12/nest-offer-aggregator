@@ -39,6 +39,8 @@ describe('OfferController', () => {
           isAndroid: true,
           isIos: true,
           offerUrlTemplate: 'offerUrlTemplate',
+          slug: 'slug',
+          providerName: 'providerName',
         },
       ];
 

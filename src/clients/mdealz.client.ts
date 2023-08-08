@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { OfferDto } from 'src/dtos/offer.dto';
 import { offer2Payload } from 'src/mock/offer2.payload';
 import { IClient } from './Iclient.interface';
-import { validate, validateOrReject } from 'class-validator';
+import { validateOrReject } from 'class-validator';
 import { plainToClass } from 'class-transformer';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class MDealzClient implements IClient {
@@ -38,7 +39,7 @@ export class MDealzClient implements IClient {
           isIos: os.ios,
           offerUrlTemplate: offer.tracking_url,
           providerName: this.getClientName(),
-          slug: offer.slug ?? '',
+          slug: randomUUID(),
         };
         const newTransformedOffer = plainToClass(OfferDto, transformedOffer);
         await validateOrReject(newTransformedOffer);
